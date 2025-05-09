@@ -1,0 +1,9 @@
+[submodule "auth-service"]
+	path = auth-service
+	url = https://github.com/Christabll/IST-auth-service
+[submodule "leave-service"]
+	path = leave-service
+	url = https://github.com/Christabll/IST_LeaveManagementService
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/Christabll/leave-management-frontend 

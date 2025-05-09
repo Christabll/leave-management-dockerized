@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_DB: leavemanagement
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  auth-service:
+    build: ./auth-service
+    env_file:
+      - ./auth-service/.env
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db
+
+  leave-service:
+    build: ./leave-service
+    env_file:
+      - ./leave-service/.env
+    ports:
+      - "8082:8082"
+    depends_on:
+      - db
+      - auth-service
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - leave-service
+      - auth-service
+
+volumes:
+  pgdata: 
